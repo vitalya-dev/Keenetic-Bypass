@@ -10,6 +10,7 @@ declare -A sites=(
   [youtube]="youtube.com"
   [telegram]="telegram.org"
   [instagram]="instagram.com"
+  [facebook]="facebook.com"
 )
 
 route_re='^route add ([0-9]{1,3}\.){3}[0-9]{1,3} mask ([0-9]{1,3}\.){3}[0-9]{1,3} 0\.0\.0\.0$'
@@ -59,6 +60,6 @@ for name in "${!sites[@]}"; do
   printf '%-20s -> %4s доменов\n' "$name.domains.txt" "$(wc -l < "$name.domains.txt")"
 done
 
-cat youtube.domains.txt telegram.domains.txt instagram.domains.txt | sort -u > all.domains.txt
+cat youtube.domains.txt telegram.domains.txt instagram.domains.txt facebook.domains.txt | sort -u > all.domains.txt
 chmod 644 all.domains.txt
 printf '%-20s -> %4s доменов\n' all.domains.txt "$(wc -l < all.domains.txt)"

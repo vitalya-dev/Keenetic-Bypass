@@ -2,7 +2,7 @@
 
 Генератор списков обхода для роутера **Keenetic**: статические IPv4-маршруты
 (`*.bat`) и списки доменов (`*.domains.txt`) для YouTube / Telegram /
-Instagram. Источник — [iplist.opencck.org](https://iplist.opencck.org/ru/).
+Instagram / Facebook. Источник — [iplist.opencck.org](https://iplist.opencck.org/ru/).
 Только IPv4. Всё на русском: `README.md` — инструкция для человека,
 `AGENTS.md` — контекст для агента. Держи их в согласии.
 
@@ -11,13 +11,13 @@ Instagram. Источник — [iplist.opencck.org](https://iplist.opencck.org/
 | Файл | Что это |
 |---|---|
 | `update.sh` | единственный генератор: тянет маршруты и домены, чистит, валидирует |
-| `youtube.bat` / `telegram.bat` / `instagram.bat` | маршруты (IPv4, формат Keenetic) |
-| `youtube.domains.txt` / `telegram.domains.txt` / `instagram.domains.txt` | домены по сервисам |
-| `all.domains.txt` | объединение трёх списков доменов без дублей |
+| `youtube.bat` / `telegram.bat` / `instagram.bat` / `facebook.bat` | маршруты (IPv4, формат Keenetic) |
+| `youtube.domains.txt` / `telegram.domains.txt` / `instagram.domains.txt` / `facebook.domains.txt` | домены по сервисам |
+| `all.domains.txt` | объединение списков доменов всех сервисов без дублей |
 | `README.md` | руководство по импорту в веб-интерфейс роутера |
 
-Текущие размеры (сверяйся при правках): маршруты 799 / 138 / 126,
-домены 176 / 20 / 7, сводный — 203.
+Текущие размеры (сверяйся при правках): маршруты 799 / 138 / 126 / 230,
+домены 176 / 20 / 7 / 12, сводный — 212.
 
 ## Mental model
 
@@ -41,9 +41,11 @@ bash -n update.sh  # проверка синтаксиса после право
 ```
 https://iplist.opencck.org/?format=bat&site=youtube.com&data=cidr4
 https://iplist.opencck.org/?format=wildcard&site=youtube.com&data=domains
+https://iplist.opencck.org/?format=bat&site=facebook.com&data=cidr4
+https://iplist.opencck.org/?format=wildcard&site=facebook.com&data=domains
 ```
 
-сайты: `youtube.com`, `telegram.org`, `instagram.com`.
+сайты: `youtube.com`, `telegram.org`, `instagram.com`, `facebook.com`.
 
 ## Правила чистки и валидации (зашиты в update.sh — менять осторожно)
 
@@ -55,8 +57,8 @@ https://iplist.opencck.org/?format=wildcard&site=youtube.com&data=domains
   → выброс `---`-артефактов → выброс непубличных зон
   `\.(google|googlevideo|internal|local|lan|home)$` → длина ≤ 253 →
   `sort -u` → финальный `\n`. Пустой результат = файл не перезаписывать.
-- `all.domains.txt` собирается из трёх файлов через `sort -u`; руками не
-  трогать.
+- `all.domains.txt` собирается из всех файлов `*.domains.txt` через `sort -u`;
+  руками не трогать.
 
 ## Импорт в Keenetic
 
@@ -95,10 +97,11 @@ https://iplist.opencck.org/?format=wildcard&site=youtube.com&data=domains
 - Последний `0.0.0.0` в строках `route add` — заглушка шлюза; Keenetic сам
   подставляет выбранный при импорте интерфейс. Руками не править.
 - **Перекрытие с Google/Meta.** В YouTube-доменах есть `google.com`,
-  `googleapis.com`, `gstatic.com`, в Instagram — `facebook.com`,
-  `facebook.net`, `fbcdn.*`. Соответствующие сети уедут в тоннель. Если чистить
-  вручную — `update.sh` вернёт их при следующем запуске (или правь фильтры в
-  скрипте).
+  `googleapis.com`, `gstatic.com`, в Instagram и Facebook — `facebook.com`,
+  `facebook.net`, `fbcdn.*`, `fbsbx.com` и т.п. Соответствующие сети уедут в
+  тоннель. Источник для Facebook отдаёт ещё `licdn.com` (это CDN LinkedIn) —
+  трафик LinkedIn тоже уедет в тоннель. Если чистить вручную — `update.sh`
+  вернёт их при следующем запуске (или правь фильтры в скрипте).
 - Секретов в проекте нет и быть не должно. Крупные дампы API (напр. полный
   `iplist.json`) в репозиторий не тащить.
 

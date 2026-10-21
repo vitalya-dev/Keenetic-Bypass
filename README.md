@@ -1,4 +1,4 @@
-# Маршруты и домены для Keenetic: YouTube / Telegram / Instagram
+# Маршруты и домены для Keenetic: YouTube / Telegram / Instagram / Facebook
 
 Данные с [iplist.opencck.org](https://iplist.opencck.org/ru/). В папке два
 независимых набора — можно использовать оба сразу или любой один.
@@ -14,6 +14,7 @@ Keenetic. Работает на любой прошивке, тоннель оп
 | `youtube.bat`   | youtube.com   | 799 |
 | `telegram.bat`  | telegram.org  | 138 |
 | `instagram.bat` | instagram.com | 126 |
+| `facebook.bat`  | facebook.com  | 230 |
 
 1. Веб-интерфейс роутера (`my.keenetic.net` или `192.168.1.1`).
 2. **Сетевые правила** → **Маршрутизация** → **Статические маршруты**.
@@ -36,7 +37,8 @@ Keenetic. Работает на любой прошивке, тоннель оп
 | `youtube.domains.txt`   | youtube.com   | 176 |
 | `telegram.domains.txt`  | telegram.org  | 20 |
 | `instagram.domains.txt` | instagram.com | 7 |
-| `all.domains.txt`       | все три, без дублей | 203 |
+| `facebook.domains.txt`  | facebook.com  | 12 |
+| `all.domains.txt`       | все сервисы, без дублей | 212 |
 
 1. **Сетевые правила** → **Маршрутизация** → вкладка **«Маршруты по DNS»**.
 2. В разделе **«Списки доменных имён»** → **«Создать»**, задать имя
@@ -80,8 +82,10 @@ Keenetic. Работает на любой прошивке, тоннель оп
   после обновления.
 - Домены Instagram включают `facebook.com`, `facebook.net` и `fbcdn.*` —
   они уедут в тоннель вместе с Instagram (Meta отдаёт медиа с этих
-  хостов). У Telegram лишнего нет: только `t.me`, `telegram.*`,
-  `telegra.ph`, `ton.org` и т.п.
+  хостов). У Facebook тот же набор плюс `fb.com`, `fb.me`, `fbsbx.com`,
+  `tfbnw.net` и `thefacebook.com`; есть и `licdn.com` — это CDN LinkedIn,
+  он тоже уедет в тоннель. У Telegram лишнего нет: только `t.me`,
+  `telegram.*`, `telegra.ph`, `ton.org` и т.п.
 
 ## Источники (можно грузить напрямую)
 
@@ -89,10 +93,12 @@ Keenetic. Работает на любой прошивке, тоннель оп
 https://iplist.opencck.org/?format=bat&site=youtube.com&data=cidr4
 https://iplist.opencck.org/?format=bat&site=telegram.org&data=cidr4
 https://iplist.opencck.org/?format=bat&site=instagram.com&data=cidr4
+https://iplist.opencck.org/?format=bat&site=facebook.com&data=cidr4
 
 https://iplist.opencck.org/?format=wildcard&site=youtube.com&data=domains
 https://iplist.opencck.org/?format=wildcard&site=telegram.org&data=domains
 https://iplist.opencck.org/?format=wildcard&site=instagram.com&data=domains
+https://iplist.opencck.org/?format=wildcard&site=facebook.com&data=domains
 ```
 
 Добавить `&filesave=1`, чтобы сервер отдал файл на скачивание.
